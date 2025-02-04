@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useState } from 'react';  
+import { useState } from 'react';
 import { Todos } from './components/Todos';
 
 import {type Todo as TodoType,type TodoId}from '../src/components/type-d'
