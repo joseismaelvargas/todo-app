@@ -1,8 +1,9 @@
 import './App.css'
 import { useState } from 'react';
 import { Todos } from './components/Todos';
-
-import {type Todo as TodoType,type TodoId}from '../src/components/type-d'
+import { Footer } from './components/Footer';
+import {type Todo as TodoType,type TodoId, FilterValue}from '../src/components/type-d'
+import { TODO_FILTERS } from './components/const';
 
 const mocktodo=[
   {
@@ -40,6 +41,7 @@ const mocktodo=[
 
 const App=():JSX.Element=> {
  const [todos,setTodo]=useState(mocktodo)
+ const [filterSelected,setFilterselected]=useState<FilterValue>(TODO_FILTERS.ALL)
 
  const handReduce=({id}:TodoId):void=>{
  const filter=todos.filter(todo =>todo.id!==id)
@@ -58,7 +60,16 @@ const App=():JSX.Element=> {
   })
 setTodo(newTodo)
  }
-   
+ const handlefilterChange=(filter:FilterValue):void=>{
+  setFilterselected(filter)
+ }
+ const filterTodos=todos.filter(todo=>{
+  if(filterSelected===TODO_FILTERS.ALL)return todo
+  if(filterSelected===TODO_FILTERS.ACTIVE)return !todo.completed
+  if(filterSelected===TODO_FILTERS.COMPLETED) return todo.completed
+ })
+  const activeCount= todos.filter(todo=>!todo.completed).length
+  const completedCount=todos.length-activeCount
   return(
   <> 
   <h1 className='title'>Mis Tareas 📄</h1>
@@ -66,8 +77,15 @@ setTodo(newTodo)
     
  <p className='parrafo'>Marca las Tareas Completadas</p>
 
-  <Todos todos={todos} togleComplete={handleComplete} hanleremove={handReduce}></Todos>
+  <Todos todos={filterTodos} togleComplete={handleComplete} hanleremove={handReduce}></Todos>
     </div>
+<Footer 
+activeCount={activeCount}
+completedCount={completedCount}
+filterSelected={filterSelected}
+onclearCompleted={()=>{}}
+handlefilterChange={handlefilterChange}></Footer>
+    
   </>
   )
 
