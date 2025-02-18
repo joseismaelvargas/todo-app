@@ -4,7 +4,7 @@ import { Filters } from "./Filters"
 
 interface Props{
     activeCount:number,
-    completedCount:0,
+    completedCount:number,
     filterSelected:FilterValue,
 
     onclearCompleted:()=>void,
