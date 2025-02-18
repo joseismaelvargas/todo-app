@@ -19,8 +19,8 @@ export const Filters: React.FC<Props> = ({ filterSelected, onfilterChange }) => 
               href={href}
               className={className}
               onClick={(event) => {
-                event.preventDefault(); // ✅ Se corrige la llamada
-                onfilterChange(key as FilterValue); // ✅ Se ejecuta en una línea separada
+                event.preventDefault(); 
+                onfilterChange(key as FilterValue); 
               }}
             >
               {literal}

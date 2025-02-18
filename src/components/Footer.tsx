@@ -24,6 +24,14 @@ handlefilterChange,
        </span>
        <Filters filterSelected={filterSelected}
        onfilterChange={handlefilterChange}></Filters>
+       {
+        completedCount >0&&(
+            <button className="clear-completed"
+            onClick={onclearCompleted}>
+                Borrar Completados
+            </button>
+        )
+       }
         </footer>
     )
 }

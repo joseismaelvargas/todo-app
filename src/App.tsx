@@ -4,7 +4,8 @@ import { Todos } from './components/Todos';
 import { Footer } from './components/Footer';
 import {type Todo as TodoType,type TodoId, FilterValue}from '../src/components/type-d'
 import { TODO_FILTERS } from './components/const';
-
+import Header from './components/Header';
+import { TodoTitle } from '../src/components/type-d';
 const mocktodo=[
   {
     id:'1',
@@ -42,7 +43,7 @@ const mocktodo=[
 const App=():JSX.Element=> {
  const [todos,setTodo]=useState(mocktodo)
  const [filterSelected,setFilterselected]=useState<FilterValue>(TODO_FILTERS.ALL)
-
+ console.log(todos)
  const handReduce=({id}:TodoId):void=>{
  const filter=todos.filter(todo =>todo.id!==id)
  console.log(filter)
@@ -60,8 +61,23 @@ const App=():JSX.Element=> {
   })
 setTodo(newTodo)
  }
+ const handleRemoveCompleted=():void=>{
+  const newtodos=todos.filter(todo=>!todo.completed)
+  setTodo(newtodos)
+ }
  const handlefilterChange=(filter:FilterValue):void=>{
   setFilterselected(filter)
+ }
+
+ const onAddTodo=({title}:TodoTitle):void=>{
+  const newTodos={
+    title,
+    id:crypto.randomUUID(),
+    completed:false
+  }
+  const newTodo=[...todos,newTodos]
+  setTodo(newTodo)
+
  }
  const filterTodos=todos.filter(todo=>{
   if(filterSelected===TODO_FILTERS.ALL)return todo
@@ -76,6 +92,7 @@ setTodo(newTodo)
   <div className='todoapp'>
     
  <p className='parrafo'>Marca las Tareas Completadas</p>
+ <Header onAddTodo={onAddTodo}></Header>
 
   <Todos todos={filterTodos} togleComplete={handleComplete} hanleremove={handReduce}></Todos>
     </div>
@@ -83,7 +100,7 @@ setTodo(newTodo)
 activeCount={activeCount}
 completedCount={completedCount}
 filterSelected={filterSelected}
-onclearCompleted={()=>{}}
+onclearCompleted={handleRemoveCompleted}
 handlefilterChange={handlefilterChange}></Footer>
     
   </>
