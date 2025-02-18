@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { type TodoTitle } from "./type-d"
 
 interface Props{
-    onAddTodo:({title}:TodoTitle)=>void
+    saveTodo:({title}:TodoTitle)=>void
 }
 
 export const CreateTodo:React.FC<Props>=({saveTodo})=>{
